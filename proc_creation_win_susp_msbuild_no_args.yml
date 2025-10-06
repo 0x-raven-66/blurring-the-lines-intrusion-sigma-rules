@@ -1,0 +1,25 @@
+title: MSBuild Execution Without Command Line Arguments
+id: 4b0e5f0a-1234-5678-9abc-def012345678
+status: experimental
+description: Detects anomalous execution of MSBuild.exe with no command-line arguments, often associated with malware like SectopRAT for payload deployment in intrusions.
+references:
+    - https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs/
+author: Mohamed Mostafa
+date: 2025/10/06
+tags:
+    - attack.execution
+    - attack.t1059.001
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\msbuild.exe'
+        CommandLine|endswith:
+            - '\msbuild.exe'
+            - '\msbuild.exe"'
+            - '\msbuild'
+    condition: selection
+falsepositives:
+    - Rare legitimate testing or scripting where MSBuild is invoked without projects/arguments.
+level: high

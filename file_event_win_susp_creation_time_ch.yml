@@ -1,0 +1,24 @@
+title: Suspicious File Time creation changed to Midnight UTC Timestamp
+id: a1b2c3d4-e5f6-7890-abcd-1234567890ef
+status: experimental
+description: Detects changes to a file's creation time set to exactly midnight UTC (00:00:00.000), a technique used to evade timeline-based forensics, such as observed with GT_NET.exe in ransomware intrusions.
+references:
+    - https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs/
+author: Mohamed Mostafa
+date: 2025/10/06
+tags:
+    - attack.defense-evasion
+    - attack.t1070.006
+logsource:
+    category: file_change
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 2
+        CreationUtcTime|contains: '00:00:00\.000'
+    condition: selection
+falsepositives:
+    - Legitimate software setting exact midnight timestamps (like backup tools).
+    - System clock synchronization artifacts (check NTP logs).
+level: low

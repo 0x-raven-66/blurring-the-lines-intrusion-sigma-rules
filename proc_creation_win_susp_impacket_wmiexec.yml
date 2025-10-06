@@ -1,0 +1,28 @@
+title: Impacket WMIExec.py Execution (RedCanary Threat Detection Report)
+id: 26d79902-98ac-43f8-b669-99486e2b5126
+status: experimental
+description: Detects execution from Impacket's wmiexec.py. Part of the RedCanary 2023 Threat Detection Report.
+references:
+    - https://redcanary.com/threat-detection-report/threats/impacket/
+author: RedCanary, Sigma formatting by Micah Babinski
+date: 2023/05/10
+tags:
+    - attack.s0357
+    - attack.exfiltration
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        ParentImage|endswith: '\wmiprvse.exe'
+        Image|endswith: '\cmd.exe'
+        CommandLine|contains:
+            - '*\ADMIN$\*'
+            - '1>'
+            - '2>&1'
+            - 'cd'
+            - 'quser'
+    condition: selection
+level: low
+
+# changed from regex to contains for better performance.
