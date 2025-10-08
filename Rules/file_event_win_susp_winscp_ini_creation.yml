@@ -1,11 +1,12 @@
-title: WinSCP Configuration File Creation
+# HUNTING RULE
+title: WinSCP Configuration File Creation in Portable Mode
 id: 95b2683a-89a1-4880-ba42-42da52e77cc7
 status: experimental
-description: Detects the creation or modification of WinSCP.ini, the configuration file for WinSCP (SFTP/FTP client), which may store session credentials and indicate abuse for data exfiltration in intrusions.
+description: Detects the creation of WinSCP.ini by a portable WinSCP instance, which occurs upon first launch in the executable's directory, potentially indicating abuse for data exfiltration in intrusions.
 references:
     - https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs/
 author: Mohamed Mostafa
-date: 2025/10/06
+date: 2025/10/08
 tags:
     - attack.exfiltration
     - attack.t1048
@@ -13,12 +14,15 @@ tags:
 logsource:
     category: file_event
     product: windows
+    service: sysmon
 detection:
     selection:
+        EventID: 11  
         TargetFilename|endswith: '\WinSCP.ini'
-    filter_legit:
-        ParentImage|endswith: '\WinSCP.exe'
-    condition: selection and not filter_legit  
-falsepositives:
-    - Legitimate WinSCP installations and usage.
-level: medium
+        Image|endswith: '\WinSCP.exe'  
+    filter_suspicious_path:
+        TargetFilename|contains:
+            - '\Users\Public\'  
+            - '\Temp\'         
+    condition: selection and filter_suspicious_path
+level: low

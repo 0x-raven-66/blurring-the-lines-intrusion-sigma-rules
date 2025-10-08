@@ -21,10 +21,6 @@ detection:
         - CommandLine|contains|all:
             - 'Add-LocalGroupMember '
             - ' -Group '
-    selection_group:
-        CommandLine|contains:
-            - 'Group Policy Creator Owners'
-            - 'Schema Admins'
     condition: all of selection_*
 falsepositives:
     - Administrative activity that must be investigated

@@ -10,12 +10,11 @@ references:
     - https://web.archive.org/web/20230420013146/http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
 author: Florian Roth (Nextron Systems)
 date: 2022-03-13
-modified: 2023-11-30
+modified: 2025-10-08
 tags:
     - attack.credential-access
     - attack.t1003.001
     - attack.s0002
-    - detection.threat-hunting
 logsource:
     category: process_access
     product: windows
@@ -80,7 +79,7 @@ detection:
             - 'C:\Program Files (x86)\'
             - 'C:\WINDOWS\system32\'
     filter_wer:
-        SourceCommandLine: 'C:\WINDOWS\system32\wermgr.exe -upload'
+        SourceCommandLine: 'C:\WINDOWS\system32\wermgr.exe -upload' # Windows Error Reporting
     filter_localappdata:
         SourceImage|contains|all:
             - 'C:\Users\'

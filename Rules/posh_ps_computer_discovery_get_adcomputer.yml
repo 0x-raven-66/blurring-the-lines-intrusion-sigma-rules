@@ -6,8 +6,10 @@ references:
     - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
     - https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
     - https://www.cisa.gov/uscert/sites/default/files/publications/aa22-320a_joint_csa_iranian_government-sponsored_apt_actors_compromise_federal%20network_deploy_crypto%20miner_credential_harvester.pdf
-author: Nasreddine Bencherchali (Nextron Systems)
+    - https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs/
+author: Nasreddine Bencherchali (Nextron Systems), Mohamed Mostafa
 date: 2022-11-17
+modified: 2025-10-08
 tags:
     - attack.discovery
     - attack.t1033
@@ -18,7 +20,7 @@ logsource:
 detection:
     selection:
         ScriptBlockText|contains|all:
-            - 'Get-ADComputer '
+            - 'Get-ADComputer'
             - ' -Filter \*'
         ScriptBlockText|contains:
             - 'Select'

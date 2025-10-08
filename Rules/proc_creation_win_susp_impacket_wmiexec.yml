@@ -4,11 +4,13 @@ status: experimental
 description: Detects execution from Impacket's wmiexec.py. Part of the RedCanary 2023 Threat Detection Report.
 references:
     - https://redcanary.com/threat-detection-report/threats/impacket/
-author: RedCanary, Sigma formatting by Micah Babinski
+author: RedCanary, Sigma formatting by Micah Babinski, Mohamed Mostafa
 date: 2023/05/10
+modified: 2025/10/08
 tags:
     - attack.s0357
-    - attack.exfiltration
+    - attack.lateral-movement
+    - attack.t1047
 logsource:
     category: process_creation
     product: windows
@@ -23,6 +25,6 @@ detection:
             - 'cd'
             - 'quser'
     condition: selection
-level: low
+level: medium
 
 # changed from regex to contains for better performance.

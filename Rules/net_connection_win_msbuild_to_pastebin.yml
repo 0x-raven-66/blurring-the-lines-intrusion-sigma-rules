@@ -1,0 +1,23 @@
+title: Suspicious MSBuild Network Connection to Pastebin
+id: 0a1ff7a5-bfdd-4146-a8c7-4041bfb0826b
+status: experimental
+description: Detects network connections initiated by msbuild.exe to pastebin.com, potentially indicating data exfiltration or C2 activity in intrusions.
+references:
+    - https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs/
+author: Mohamed Mostafa
+date: 2025/10/08
+tags:
+    - attack.command-and-control
+    - attack.t1041
+    - attack.t1020
+logsource:
+    category: network_connection
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 3  
+        Image|endswith: '\msbuild.exe'
+        DestinationHostname|contains: 'pastebin.com'  
+    condition: selection
+level: high
