@@ -5,9 +5,9 @@ description: Detects suspicious launch of the PSEXESVC service on this system an
 references:
     - https://learn.microsoft.com/en-us/sysinternals/downloads/psexec
     - https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs
-author: Florian Roth (Nextron Systems)
+author: Florian Roth (Nextron Systems), Mohamed Mostafa
 date: 2022-07-21
-modified: 2023-02-28
+modified: 2025-10-06
 tags:
     - attack.execution
 logsource:
@@ -15,10 +15,11 @@ logsource:
     product: windows
 detection:
     selection:
-        ParentImage: 'C:\Windows\PSEXESVC.exe'
+        Image|endswith: '\psexec.exe'
         CommandLine|contains|all:
             - '-s'
             - '-d'
+            - '.dll'
     condition: selection
 falsepositives:
     - Users that debug Microsoft Intune issues using the commands mentioned in the official documentation; see https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension
